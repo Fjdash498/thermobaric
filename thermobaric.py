@@ -3,10 +3,12 @@ import zipfile as z
 import argparse
 import logging
 from os import remove
+from datetime import datetime
+
 # setup logging info
 logger = logging.getLogger("util")
 logging.basicConfig(level=logging.INFO, handlers=[
-                        logging.FileHandler("thermobaric-dev.log"),
+                        logging.FileHandler(f"thermobaric-{datetime.now().strftime('%Y%m%d_%H%S')}.log"),
                         logging.StreamHandler()
                     ], format="%(asctime)s || %(levelname)s => %(message)s    ")
 
@@ -14,6 +16,16 @@ logging.basicConfig(level=logging.INFO, handlers=[
 GB = 1073741824
 MB = 1048576
 KB = 1024
+
+def print_title() -> None:
+
+    print("💥" + "="*59 + "💥")
+    print("""   __  __                              __               _
+  / /_/ /_  ___  _________ ___  ____  / /_  ____ ______(_)____
+ / __/ __ \/ _ \/ ___/ __ `__ \/ __ \/ __ \/ __ `/ ___/ / ___/
+/ /_/ / / /  __/ /  / / / / / / /_/ / /_/ / /_/ / /  / / /__
+\__/_/ /_/\___/_/  /_/ /_/ /_/\____/_.___/\__,_/_/  /_/\___/""")
+    print("💥" + "="*59 + "💥")
 
 def validate_args(args: argparse.Namespace) -> bool:
     if args.outFile == "":
@@ -121,6 +133,7 @@ def slip(zip_name: list, file_name: str,comp=5):
         
 
 def main(args):
+    print_title()
     logger.debug(f"found args: {args}")
     if ( validate_args(args) ):
         if args.t:
